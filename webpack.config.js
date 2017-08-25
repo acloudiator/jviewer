@@ -30,15 +30,20 @@ module.exports = [
             loaders
         },
         plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false,
-                },
-                output: {
-                    comments: false,
-                },
-            }),
+            // new webpack.optimize.UglifyJsPlugin({
+            //     compress: {
+            //         warnings: false,
+            //     },
+            //     output: {
+            //         comments: false,
+            //     },
+            // }),
             new CopyWebpackPlugin([{from: 'src/public'}])
-        ]
+        ],
+        resolve: {
+            alias: {
+                "react": __dirname + '/node_modules/react',
+            }
+        }
     }
 ]

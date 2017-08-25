@@ -5,3 +5,33 @@
     position: relative;
     margin-top: 5vh;
 }
+#usericon {
+    background-image: url(/public/image/user2.png);
+    background-repeat: no-repeat;
+    background-position-x: 13px;
+    background-position-y: 14px;
+}
+#servericon {
+    background-image: url(/public/image/server.png);
+    background-repeat: no-repeat;
+    background-position-x: 12px;
+    background-position-y: 6px;
+}
+#routericon {
+    background-image: url(/public/image/router.png);
+    background-repeat: no-repeat;
+    background-position-x: 7px;
+    background-position-y: 6px;
+}
+path#icon-router {
+    color: #da70d6;
+    fill: currentColor;
+}
+path#icon-server {
+    color: #778899;
+    fill: currentColor;
+}
+path#icon-user {
+    color: #434343;
+    fill: currentColor;
+}

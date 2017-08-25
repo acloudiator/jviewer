@@ -1,0 +1,267 @@
+
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          -86.147999999999996,
+          39.790999999999997
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Marion",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "7774",
+        "fips_class": "C3",
+        "fips_county_cd": "97",
+        "full_county_name": "Marion County",
+        "link_title": null,
+        "url": "http://www.indy.gov",
+        "name": "Indianapolis",
+        "primary_latitude": "39.76",
+        "primary_longitude": "-86.15",
+        "state_abbreviation": "IN",
+        "state_name": "Indiana"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -87.345299999999995,
+          41.595599999999997
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Lake",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "7619",
+        "fips_class": "C1",
+        "fips_county_cd": "89",
+        "full_county_name": "Lake County",
+        "link_title": null,
+        "url": "http://www.gary.in.us/",
+        "name": "Gary",
+        "primary_latitude": "41.59",
+        "primary_longitude": "-87.34",
+        "state_abbreviation": "IN",
+        "state_name": "Indiana"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -118.25,
+          34.049999999999997
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Los Angeles",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "1525",
+        "fips_class": "C1",
+        "fips_county_cd": "37",
+        "full_county_name": "Los Angeles County",
+        "link_title": null,
+        "url": "http://lacity.org/",
+        "name": "Los Angeles",
+        "primary_latitude": "34.05",
+        "primary_longitude": "-118.24",
+        "state_abbreviation": "CA",
+        "state_name": "California"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -121.4689,
+          38.555599999999998
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Sacramento",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "1645",
+        "fips_class": "C1",
+        "fips_county_cd": "67",
+        "full_county_name": "Sacramento County",
+        "link_title": null,
+        "url": "http://www.cityofsacramento.org/",
+        "name": "Sacramento",
+        "primary_latitude": "38.58",
+        "primary_longitude": "-121.49",
+        "state_abbreviation": "CA",
+        "state_name": "California"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -122.2358,
+          38.113100000000003
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Solano",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "1732",
+        "fips_class": "C1",
+        "fips_county_cd": "95",
+        "full_county_name": "Solano County",
+        "link_title": null,
+        "url": "http://www.ci.vallejo.ca.us/",
+        "name": "Vallejo",
+        "primary_latitude": "38.1",
+        "primary_longitude": "-122.25",
+        "state_abbreviation": "CA",
+        "state_name": "California"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -71.099999999999994,
+          42.387500000000003
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Middlesex",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "11745",
+        "fips_class": "C5",
+        "fips_county_cd": "17",
+        "full_county_name": "Middlesex County",
+        "link_title": null,
+        "url": "http://www.somervillema.gov/",
+        "name": "Somerville",
+        "primary_latitude": "42.38",
+        "primary_longitude": "-71.09",
+        "state_abbreviation": "MA",
+        "state_name": "Massachusetts"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -77.466700000000003,
+          37.533299999999997
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Richmond (city)",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "33704",
+        "fips_class": "C7",
+        "fips_county_cd": "760",
+        "full_county_name": "Richmond (City)",
+        "link_title": null,
+        "url": "http://www.richmondgov.com/",
+        "name": "Richmond",
+        "primary_latitude": "37.55",
+        "primary_longitude": "-77.46",
+        "state_abbreviation": "VA",
+        "state_name": "Virginia"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -80,
+          40.441699999999997
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Allegheny",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "29240",
+        "fips_class": "C5",
+        "fips_county_cd": "3",
+        "full_county_name": "Allegheny County",
+        "link_title": null,
+        "url": "http://www.city.pittsburgh.pa.us/",
+        "name": "Pittsburgh",
+        "primary_latitude": "40.44",
+        "primary_longitude": "-79.99",
+        "state_abbreviation": "PA",
+        "state_name": "Pennsylvania"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -106.61,
+          35.110700000000001
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Bernalillo",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "22688",
+        "fips_class": "C1",
+        "fips_county_cd": "1",
+        "full_county_name": "Bernalillo County",
+        "link_title": null,
+        "url": "http://www.cabq.gov/",
+        "name": "Albuquerque",
+        "primary_latitude": "35.08",
+        "primary_longitude": "-106.65",
+        "state_abbreviation": "NM",
+        "state_name": "New Mexico"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          -105.27970000000001,
+          40.017600000000002
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "county_name": "Boulder",
+        "description": null,
+        "feat_class": "Populated Place",
+        "feature_id": "1790",
+        "fips_class": "C1",
+        "fips_county_cd": "13",
+        "full_county_name": "Boulder County",
+        "link_title": null,
+        "url": "http://www.bouldercolorado.gov/",
+        "name": "Boulder",
+        "primary_latitude": "40.01",
+        "primary_longitude": "-105.27",
+        "state_abbreviation": "CO",
+        "state_name": "Colorado"
+      },
+      "type": "Feature"
+    }
+  ]
+}
+

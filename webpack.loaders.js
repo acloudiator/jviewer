@@ -1,7 +1,7 @@
 module.exports = [
   {
     test: /\.(css|scss|sass)$/,
-    loader: 'style!css!sass',
+    loader: 'style-loader!css-loader!sass-loader',
     exclude: ['node_modules']
   },
   {
