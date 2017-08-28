@@ -35,6 +35,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-1": "^6.5.0",
     "babel-register": "^6.24.1",
+    "concurrently": "^3.5.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^3.0.0",
