@@ -62,6 +62,10 @@ router.get('/getrelationships', (req, res) => {
 
 });
 
+router.get('/twopoints', (req, res) => {
+    res.status(200).send(renderTwoPoints());
+})
+
 router.get('/us-states.json', (req, res) => {
     let fileUrl = 'dist/public/data/us-states.json';
     try{
@@ -148,6 +152,26 @@ Wyoming,1`;
     }
 
 });
+
+function renderTwoPoints() {
+    return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <link rel="stylesheet" type="text/css" href="public/lib/css/style.css">
+      </head>
+      <body>
+        <div id="graph">
+          <h1>Connecting Two Points with a Line in D3.js</h1>
+        </div>
+
+        <!-- Scripts -->
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="public/lib/js/script.js"></script>
+      </body>
+    </html>
+    `;
+}
 
 function renderSVGDemo() {
     return `
@@ -451,7 +475,7 @@ function renderRouteMapPage() {
 
     .route {
       fill: none;
-      stroke: red;
+      stroke: blue;
       stroke-width: 3px;
     }
 
@@ -539,7 +563,7 @@ function renderRouteMapPage() {
         .attr("dy", ".71em")
         .text(function(d) { return d.key; });
 
-    d3.json("/mbostock/raw/4090846/world-50m.json", function(error, world) {
+    d3.json("public/data/world-50m.json", function(error, world) {
       if (error) throw error;
 
       svg.insert("path", ".graticule")
@@ -620,6 +644,51 @@ function renderFullPage(html, initialState) {
       stroke: #ccc;
       stroke-opacity: .5;
     }
+
+    .route {
+        stroke: green;
+        stroke-width: 2px;
+        fill: none;
+    }
+
+    .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
         </style>
       </head>
       <body>
@@ -635,31 +704,35 @@ function renderFullPage(html, initialState) {
     var svg = document.body.appendChild(po.svg("svg")),
         defs = svg.appendChild(po.svg("defs"));
 
-    /* Create three linear gradients for each category. */
-    defs.appendChild(gradient("#D90000", "#A30000")).setAttribute("id", "gradient-violent");
-    defs.appendChild(gradient("#23965E", "#1A7046")).setAttribute("id", "gradient-property");
-    defs.appendChild(gradient("#3489BA", "#27678B")).setAttribute("id", "gradient-quality");
+    var router = svg.appendChild(po.svg("symbol"));
+    router.setAttribute("id", "icon-router");
+    router.setAttribute("display", "none");
+    var routerPath = router.appendChild(po.svg("path"));
+    routerPath.setAttribute("transform", "scale(1.5)");
+    routerPath.setAttribute("d","M15 18v-2.016h-2.016v2.016h2.016zM11.484 18v-2.016h-1.969v2.016h1.969zM8.016 18v-2.016h-2.016v2.016h2.016zM18.984 12.984c1.078 0 2.016 0.938 2.016 2.016v3.984c0 1.078-0.938 2.016-2.016 2.016h-13.969c-1.078 0-2.016-0.938-2.016-2.016v-3.984c0-1.078 0.938-2.016 2.016-2.016h9.984v-3.984h2.016v3.984h1.969zM19.313 6.703l-0.797 0.797c-0.703-0.703-1.641-0.984-2.531-0.984s-1.781 0.281-2.484 0.984l-0.797-0.797c0.891-0.891 2.063-1.406 3.281-1.406s2.438 0.516 3.328 1.406zM20.203 5.906c-1.219-1.078-2.719-1.688-4.219-1.688s-2.953 0.609-4.172 1.688l-0.797-0.797c1.406-1.406 3.188-2.109 4.969-2.109s3.609 0.703 5.016 2.109z");
+    routerPath.setAttribute("id", "icon-router");
 
-    var symbol = svg.appendChild(po.svg("symbol"));
-    symbol.setAttribute("id", "icon-router");
-    var path = symbol.appendChild(po.svg("path"));
-    path.setAttribute("transform", "scale(1.5)");
-    path.setAttribute("d","M15 18v-2.016h-2.016v2.016h2.016zM11.484 18v-2.016h-1.969v2.016h1.969zM8.016 18v-2.016h-2.016v2.016h2.016zM18.984 12.984c1.078 0 2.016 0.938 2.016 2.016v3.984c0 1.078-0.938 2.016-2.016 2.016h-13.969c-1.078 0-2.016-0.938-2.016-2.016v-3.984c0-1.078 0.938-2.016 2.016-2.016h9.984v-3.984h2.016v3.984h1.969zM19.313 6.703l-0.797 0.797c-0.703-0.703-1.641-0.984-2.531-0.984s-1.781 0.281-2.484 0.984l-0.797-0.797c0.891-0.891 2.063-1.406 3.281-1.406s2.438 0.516 3.328 1.406zM20.203 5.906c-1.219-1.078-2.719-1.688-4.219-1.688s-2.953 0.609-4.172 1.688l-0.797-0.797c1.406-1.406 3.188-2.109 4.969-2.109s3.609 0.703 5.016 2.109z");
-    path.setAttribute("id", "icon-router");
+    var server = svg.appendChild(po.svg("symbol"));
+    server.setAttribute("id", "icon-server");
+    server.setAttribute("display", "none");
+    var serverPath = server.appendChild(po.svg("path"));
+    serverPath.setAttribute("transform", "scale(1.2)");
+    serverPath.setAttribute("d","M22 12h-20c-1.094 0-2 1-2 2v4c0 1 1 2 2 2h20c1 0 2-1 2-2v-4c0-1-1-2-2-2zM4 18h-2v-4h2v4zM8 18h-2v-4h2v4zM12 18h-2v-4h2v4zM16 18h-2v-4h2v4zM22 22h-20c-1.094 0-2 1-2 2v4c0 1 1 2 2 2h20c1 0 2-1 2-2v-4c0-1-1-2-2-2zM4 28h-2v-4h2v4zM8 28h-2v-4h2v4zM12 28h-2v-4h2v4zM16 28h-2v-4h2v4zM22 2h-20c-1.094 0-2 1-2 2v4c0 1 1 2 2 2h20c1 0 2-1 2-2v-4c0-1-1-2-2-2zM4 8h-2v-4h2v4zM8 8h-2v-4h2v4zM12 8h-2v-4h2v4zM16 8h-2v-4h2v4zM22 6h-2v-2h2v2z");
+    serverPath.setAttribute("id", "icon-server");
 
-    symbol = svg.appendChild(po.svg("symbol"));
-    symbol.setAttribute("id", "icon-server");
-    path = symbol.appendChild(po.svg("path"));
-    path.setAttribute("transform", "scale(1.2)");
-    path.setAttribute("d","M22 12h-20c-1.094 0-2 1-2 2v4c0 1 1 2 2 2h20c1 0 2-1 2-2v-4c0-1-1-2-2-2zM4 18h-2v-4h2v4zM8 18h-2v-4h2v4zM12 18h-2v-4h2v4zM16 18h-2v-4h2v4zM22 22h-20c-1.094 0-2 1-2 2v4c0 1 1 2 2 2h20c1 0 2-1 2-2v-4c0-1-1-2-2-2zM4 28h-2v-4h2v4zM8 28h-2v-4h2v4zM12 28h-2v-4h2v4zM16 28h-2v-4h2v4zM22 2h-20c-1.094 0-2 1-2 2v4c0 1 1 2 2 2h20c1 0 2-1 2-2v-4c0-1-1-2-2-2zM4 8h-2v-4h2v4zM8 8h-2v-4h2v4zM12 8h-2v-4h2v4zM16 8h-2v-4h2v4zM22 6h-2v-2h2v2z");
-    path.setAttribute("id", "icon-server");
-
-    symbol = svg.appendChild(po.svg("symbol"));
-    symbol.setAttribute("id", "icon-user");
-    path = symbol.appendChild(po.svg("path"));
-    path.setAttribute("transform", "scale(0.05)");
-    path.setAttribute("d","M107.417,147.134c0-17.964,9.563-33.692,23.867-42.391v-9.39C131.284,42.778,174.058,0,226.633,0c52.579,0,95.344,42.778,95.344,95.353v12.827c11.527,9.071,18.953,23.14,18.953,38.949c0,23.207-15.976,42.629-37.51,48.024c-1.213,3.022-3.023,6.277-5.927,9.416c-6.66,7.232-16.783,11.675-30.103,13.343c-0.873,2.672-3.3,4.637-6.264,4.637h-12.666c-3.691,0-6.684-2.987-6.684-6.677s2.992-6.676,6.684-6.676h12.666c2.362,0,4.346,1.3,5.535,3.162c11.972-1.482,20.937-5.351,26.696-11.593c1.315-1.435,2.306-2.891,3.169-4.335c-1.704,0.177-3.431,0.273-5.171,0.273V97.565c5.297,0,10.412,0.842,15.2,2.385v-4.602c0-44.074-35.853-79.931-79.929-79.931c-44.073,0-79.931,35.857-79.931,79.931v3.292c3.316-0.697,6.758-1.071,10.275-1.071v99.128C129.606,196.698,107.417,174.509,107.417,147.134zM248.148,204.336h12.671c2.818,0,5.512,1.008,7.663,2.796c3.893-0.646,7.271-1.65,10.319-2.877c1.4-1.237,2.81-2.462,4.111-3.79V85.046h0.383c-14.99-15.413-35.928-25.021-59.125-25.021c-23.198,0-44.134,9.607-59.127,25.025h0.373v115.415c14.972,15.177,35.748,24.601,58.754,24.601c4.779,0,9.435-0.495,13.985-1.279c-1.447-2.021-2.324-4.478-2.324-7.15C235.832,209.851,241.362,204.336,248.148,204.336zM259.186,230.698h-70.022c-58.257,0-105.655,47.398-105.655,105.658v85.65l0.219,1.334l5.908,1.849c55.59,17.361,103.901,23.167,143.658,23.167c77.66,0,122.669-22.149,125.441-23.55l5.526-2.8h0.588v-85.65C364.849,278.097,317.449,230.698,259.186,230.698z");
-    path.setAttribute("id", "icon-user");
+    var user = svg.appendChild(po.svg("symbol"));
+    user.setAttribute("id", "icon-user");
+    user.setAttribute("class", "tooltip");
+    var userPath = user.appendChild(po.svg("path"));
+    userPath.setAttribute("transform", "scale(0.05)");
+    userPath.setAttribute("d","M107.417,147.134c0-17.964,9.563-33.692,23.867-42.391v-9.39C131.284,42.778,174.058,0,226.633,0c52.579,0,95.344,42.778,95.344,95.353v12.827c11.527,9.071,18.953,23.14,18.953,38.949c0,23.207-15.976,42.629-37.51,48.024c-1.213,3.022-3.023,6.277-5.927,9.416c-6.66,7.232-16.783,11.675-30.103,13.343c-0.873,2.672-3.3,4.637-6.264,4.637h-12.666c-3.691,0-6.684-2.987-6.684-6.677s2.992-6.676,6.684-6.676h12.666c2.362,0,4.346,1.3,5.535,3.162c11.972-1.482,20.937-5.351,26.696-11.593c1.315-1.435,2.306-2.891,3.169-4.335c-1.704,0.177-3.431,0.273-5.171,0.273V97.565c5.297,0,10.412,0.842,15.2,2.385v-4.602c0-44.074-35.853-79.931-79.929-79.931c-44.073,0-79.931,35.857-79.931,79.931v3.292c3.316-0.697,6.758-1.071,10.275-1.071v99.128C129.606,196.698,107.417,174.509,107.417,147.134zM248.148,204.336h12.671c2.818,0,5.512,1.008,7.663,2.796c3.893-0.646,7.271-1.65,10.319-2.877c1.4-1.237,2.81-2.462,4.111-3.79V85.046h0.383c-14.99-15.413-35.928-25.021-59.125-25.021c-23.198,0-44.134,9.607-59.127,25.025h0.373v115.415c14.972,15.177,35.748,24.601,58.754,24.601c4.779,0,9.435-0.495,13.985-1.279c-1.447-2.021-2.324-4.478-2.324-7.15C235.832,209.851,241.362,204.336,248.148,204.336zM259.186,230.698h-70.022c-58.257,0-105.655,47.398-105.655,105.658v85.65l0.219,1.334l5.908,1.849c55.59,17.361,103.901,23.167,143.658,23.167c77.66,0,122.669-22.149,125.441-23.55l5.526-2.8h0.588v-85.65C364.849,278.097,317.449,230.698,259.186,230.698z");
+    userPath.setAttribute("id", "icon-user");
+    var userText = user.appendChild(po.svg("text"));
+    userText.setAttribute("x", "15");
+    userText.setAttribute("y", "15");
+    userText.setAttribute("fill", "red");
+    userText.textContent = "fill red";
+    userText.setAttribute("class", "tooltiptext");
 
     /* Create a marker path. */
     defs.appendChild(icons.marker()).setAttribute("id", "marker");
@@ -681,7 +754,7 @@ function renderFullPage(html, initialState) {
     map.add(po.geoJson()
         .url(crimespotting("http://oakland.crimespotting.org"
             + "/crime-data"
-            + "?count=100"
+            + "?count=1000"
             + "&format=json"
             + "&bbox={B}"
             + "&dstart=2010-04-01"
@@ -703,37 +776,83 @@ function renderFullPage(html, initialState) {
               p = c.parentNode,
               u = f.element = po.svg("use");
 
+          let serverLoc = {};
+
           if (i ==  0) {
+              serverLoc = d;
               u.setAttributeNS(po.ns.xlink, "href", "#icon-server");
           } else if (i == e.features.length - 1) {
               u.setAttributeNS(po.ns.xlink, "href", "#icon-router");
           } else {
               u.setAttributeNS(po.ns.xlink, "href", "#icon-user");
+              u.setAttribute("id", "userdetail"+i);
+              //u.setAttribute("class", "tooltip");
+              //let text = u.appendChild(po.svg("text"));
+              //text.setAttribute("class", "tooltiptext");
+            //   let route = p.appendChild(po.svg("path"));
+            //   route.setAttribute("class", "route");
+            //   route.setAttribute("d", "M887.609096704553,221.74640750700695L873.3127123771042,216.79216960235163L858.8504512708448,212.33802996402227L844.2712256805119,208.43326653973645L829.628065489569,205.1242895476648L814.9764811637328,202.45304616281194L800.3724427404582,200.45532160832784L785.8700898453505,199.15908850979199L771.5193596948584,198.5830832204206L757.3637691371764,198.7357851899577L743.4385939483254,199.6149371137112L729.7696448926064,201.20767377269658L716.3727525175404,203.4912411370998L703.2539633072643,206.43420550783944L690.4103474568255,209.99799457148987L677.831247471744,214.13858900294508L665.4997686149429,218.8081941926426L657.4410664084451,209.39283389886998L648.969779009318,200.1302571412195L640.0574482158424,191.0525055570867L630.6736625619385,182.19717039195447L620.7862709697204,173.6086320206595L610.3619851458274,165.33945915552675L599.3675910236924,157.45190432314965L587.7720730567654,150.0193447393258L581.7406084683641,146.4999441546811L575.5500268196361,143.12737698420145L569.1988616879274,139.9142966232971L562.6867343110875,136.87407388439735L556.0146121651596,134.02070593249988L549.1850862761781,131.36867923438956L542.202654642685,128.93278001299026L535.073993334897,126.72784795512749L527.8081909924738,124.76847268921412L520.4169176905668,123.06863790113528L512.9144969667835,121.64132464255226L505.3178517849742,120.49809272522597L497.6463025822996,119.6486659536458L489.92120859317436,119.10055186875539L482.16546122438757,118.85872818642221L474.40285766217465,118.92542516941268L465.87674299469006,114.32570457693097L456.81791384575837,110.13657668541217L447.2031285679878,106.41701030563485L437.0234097676669,103.22901360375175L426.2901840414857,100.63455522050265L415.04083806883057,98.69124110063433L403.3419561654026,97.44711009108983L391.2884597419489,96.93538053482735L378.9977057675919,97.17031646582114L366.5992253390747,98.14532440724585L354.22243951425565,99.83384275718487L341.9853966646766,102.19275735895238L329.9869277821612,105.16738316497481L318.3031156236516,108.69680771659554L306.98753864966454,112.71860890816339L296.07398874869415,117.17241073048419L285.5803078515934,122.00217301245951L275.51233871195257,127.15738826919042L265.8674218882386,132.59346987227394L256.6372175016227,138.27161388540102L247.80984218357924,144.1583619349356L239.3714126088944,150.22502564059732L231.30711800402744,156.44707483508208L223.6019390365775,162.80354841346156L216.24111119887158,169.27651749146716L209.21040871221436,175.85061245729426L202.49630517010928,182.51261510649965L196.08605121019804,189.2511116199292L189.96769744860916,196.05619972710244L184.13008211749593,202.91924270086568L178.56279658481463,209.83266304609424L173.25613754577614,216.78976939407926L181.58151180079943,225.6313583077682L189.85922265497555,234.73677903314655L206.51716228740008,253.54010086322543L198.50810806392224,261.25263609080224L190.74001051677612,269.02382981778044L175.87191827126833,284.66373323078244");
           }
           u.setAttribute("transform", c.getAttribute("transform"));
           p.removeChild(c);
           p.appendChild(u);
+
       }
     }
 
-    /* Helper method for constructing a linear gradient. */
-    function gradient(a, b) {
-      var g = po.svg("linearGradient");
-      g.setAttribute("x1", 0);
-      g.setAttribute("y1", 1);
-      g.setAttribute("x2", 0);
-      g.setAttribute("y2", 0);
-      var s0 = g.appendChild(po.svg("stop"));
-      s0.setAttribute("offset", "0%");
-      s0.setAttribute("stop-color", a);
-      var s1 = g.appendChild(po.svg("stop"));
-      s1.setAttribute("offset", "100%");
-      s1.setAttribute("stop-color", b);
-      return g;
-    }
     $("#usericon, #servericon, #routericon").click(function() {
         $(this).toggleClass("button-highlight");
+        let displaystyle = (!$(this).hasClass("button-highlight") ? "none" : "");
+        switch ($(this).attr("id")) {
+            case "routericon":
+                router.setAttribute("display", displaystyle);
+                break;
+            case "servericon":
+                server.setAttribute("display", displaystyle);
+                break;
+            case "usericon":
+                user.setAttribute("display", displaystyle);
+                break;
+        }
     })
+
+    let dummyuserdata = {
+      "username": "jshemming0",
+      "online": false,
+      "session": "Gembucket",
+      "servicelist": "[“asset”, “aproxy”, “mixer”]",
+      "service_instances": "[“asset110”, “proxy419”, “mixer82”]",
+      "connection": null,
+      "location": {
+        "path": {
+          "lat": 49.285973,
+          "lon": -0.4889547
+        },
+        "node": {
+          "id": "cd29cc0c-37bc-4ed5-9661-ce75fdeb8361"
+        },
+        "root": {
+          "id": "b83068c8-1163-43b1-ba05-05d8a7711ec7",
+          "domain": {
+            "id": "ec73fcdb-eb37-4a05-89e1-d4fede535c7b",
+            "ice_server_address": "60.215.71.84",
+            "online": true
+          }
+        }
+      },
+      "images": {
+        "hero": "http://dummyimage.com/134x193.png/ff4444/ffffff",
+        "thumbnail": "http://dummyimage.com/137x140.png/cc0000/ffffff",
+        "tiny": "http://dummyimage.com/x.png/cc0000/ffffff"
+      }
+    }
+
+    $("body").on("mouseover", "[id^=userdetail]", function() {
+        let userid = $(this).attr("id");
+        // alert(dummyuserdata.session);
+        // alert(dummyuserdata.servicelist);
+        // alert(dummyuserdata.service_instances);
+    });
         </script>
       </body>
     </html>
